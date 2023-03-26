@@ -15,22 +15,30 @@ void DoorOpenerModule::setup() {
   pinMode(ACTIVATE_DOOR_OPENER_PIN, OUTPUT);
 }
 
-void DoorOpenerModule::loop() {
-  if (doorOpenerActive &&
-      doorOpenerEngagedAt + DOOR_OPENER_DURATION < millis()) {
-    digitalWrite(ACTIVATE_DOOR_OPENER_PIN, LOW);
-    doorOpenerActive = false;
-  }
-}
+void DoorOpenerModule::loop() { maybeDisengageDoorOpener(); }
 
 void DoorOpenerModule::processInputKo(GroupObject &iKo) {
-  if (iKo.asap() == KO_ACTIVATE_DOOR_OPENER) {
+  if (iKo.asap() == KO_ACTIVATE_DOOR_OPENER &&
+      ((bool)iKo.value(DPT_Trigger)) == true) {
+
     triggerDoorOpener();
   }
 }
 
 void DoorOpenerModule::triggerDoorOpener() {
+  DEBUG_LOG("Triggering door opener...");
+
   digitalWrite(ACTIVATE_DOOR_OPENER_PIN, HIGH);
   doorOpenerActive = true;
   doorOpenerEngagedAt = millis();
+}
+
+void DoorOpenerModule::maybeDisengageDoorOpener() {
+  if (doorOpenerActive &&
+      doorOpenerEngagedAt + DOOR_OPENER_DURATION < millis()) {
+    DEBUG_LOG("Disengaging door opener...");
+
+    digitalWrite(ACTIVATE_DOOR_OPENER_PIN, LOW);
+    doorOpenerActive = false;
+  }
 }

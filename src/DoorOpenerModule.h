@@ -15,4 +15,5 @@ private:
   long doorOpenerEngagedAt;
 
   void triggerDoorOpener();
+  void maybeDisengageDoorOpener();
 };
