@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../Organization/knxprod-support/knx_project_20/knx-editor.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<KNX xmlns="http://knx.org/xml/project/20" xmlns:op="http://github.com/OpenKNX/OpenKNXproducer" CreatedBy="KNX MT" ToolVersion="5.1.255.16695">
+  <ManufacturerData>
+    <Manufacturer RefId="M-00FA">
+      <Catalog>
+        <CatalogSection Id="M-00FA_CS-OpenKNX" Name="OpenKNX" Number="1" DefaultLanguage="de">
+          <CatalogItem Id="%CatalogItemId%" Name="Elcom-1+n-Gateway" Number="1" ProductRefId="%ProductId%" Hardware2ProgramRefId="%Hardware2ProgramId%" DefaultLanguage="de" />
+        </CatalogSection>
+      </Catalog>
+      <ApplicationPrograms>
+        <op:version OpenKnxId="0xAF" ApplicationNumber="0" ApplicationVersion="1" ReplacesVersions="0" ApplicationRevision="0" />
+        <ApplicationProgram Id="%AID%" ApplicationNumber="0" ApplicationVersion="1" ReplacesVersions="0" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="Elcom-1+n-Gateway" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="4.0">
+          <Static>
+            <Code>
+              <RelativeSegment Id="%AID%_RS-04-00000" Name="Parameters" Offset="0" Size="%MemorySize%" LoadStateMachine="4" />
+            </Code>
+            <ParameterTypes>
+              <ParameterType Id="%AID%_PT-CheckBox" Name="CheckBox">
+                <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" UIHint="CheckBox" />
+              </ParameterType>
+            </ParameterTypes>
+            <Parameters>
+              <Parameter Id="%AID%_P-0000001" Name="Enabled" ParameterType="%AID%_PT-CheckBox" Text="aktiv" Value="1">
+                <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
+              </Parameter>
+            </Parameters>
+            <ParameterRefs>
+              <ParameterRef Id="%AID%_P-0000001_R-000000101" RefId="%AID%_P-0000001" />
+            </ParameterRefs>
+            <ComObjectTable>
+              <ComObject Id="%AID%_O-0000001" Name="DoorbellRinging" Text="Klingeln" Number="1" FunctionText="Ausgang" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-11" />
+              <ComObject Id="%AID%_O-0000002" Name="ActivateDoorOpener" Text="Tür öffnen" Number="2" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-17" />
+            </ComObjectTable>
+            <ComObjectRefs>
+              <ComObjectRef Id="%AID%_O-0000001_R-000000101" RefId="%AID%_O-0000001" />
+              <ComObjectRef Id="%AID%_O-0000002_R-000000201" RefId="%AID%_O-0000002" />
+            </ComObjectRefs>
+            <AddressTable MaxEntries="65535" />
+            <AssociationTable MaxEntries="65535" />
+            <LoadProcedures>
+              <LoadProcedure MergeId="2">
+                <LdCtrlRelSegment LsmIdx="4" Size="%MemorySize%" Mode="1" Fill="0" AppliesTo="full" />
+                <LdCtrlRelSegment LsmIdx="4" Size="%MemorySize%" Mode="0" Fill="0" AppliesTo="par" />
+              </LoadProcedure>
+              <LoadProcedure MergeId="4">
+                <LdCtrlWriteRelMem ObjIdx="4" Offset="0" Size="%MemorySize%" Verify="true" AppliesTo="full,par" />
+              </LoadProcedure>
+              <LoadProcedure MergeId="7">
+                <LdCtrlLoadImageProp ObjIdx="1" PropId="27" />
+                <LdCtrlLoadImageProp ObjIdx="2" PropId="27" />
+                <LdCtrlLoadImageProp ObjIdx="3" PropId="27" />
+                <LdCtrlLoadImageProp ObjIdx="4" PropId="27" />
+              </LoadProcedure>
+            </LoadProcedures>
+            <Options />
+          </Static>
+          <Dynamic>
+            <ChannelIndependentBlock>
+              <ParameterBlock Id="%AID%_PB-1" Name="General" Text="Allgemeine Parameter">
+                <ParameterRefRef RefId="%AID%_P-0000001_R-000000101" />
+                <ComObjectRefRef RefId="%AID%_O-0000001_R-000000101" />
+                <ComObjectRefRef RefId="%AID%_O-0000002_R-000000201" />
+              </ParameterBlock>
+            </ChannelIndependentBlock>
+          </Dynamic>
+        </ApplicationProgram>
+      </ApplicationPrograms>
+      <Hardware>
+        <Hardware Id="%HardwareId%" Name="Elcom-1+n-Gateway" SerialNumber="0" VersionNumber="1" BusCurrent="10" HasIndividualAddress="true" HasApplicationProgram="true">
+          <Products>
+            <Product Id="%ProductId%" Text="Elcom-1+n-Gateway" OrderNumber="0" IsRailMounted="false" DefaultLanguage="de">
+              <RegistrationInfo RegistrationStatus="Registered" />
+            </Product>
+          </Products>
+          <Hardware2Programs>
+            <Hardware2Program Id="%Hardware2ProgramId%" MediumTypes="MT-0">
+              <ApplicationProgramRef RefId="%AID%" />
+              <RegistrationInfo RegistrationStatus="Registered" RegistrationNumber="0001/1" />
+            </Hardware2Program>
+          </Hardware2Programs>
+        </Hardware>
+      </Hardware>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

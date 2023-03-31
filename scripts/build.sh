@@ -9,7 +9,7 @@ env=$1
 target=$2
 
 cp src/DoorbellGatewayHardware.h lib/OGM-Common/include/hardware.h
-cp src/DoorbellGatewayKnxprod.h lib/OGM-Common/include/knxprod.h
+cp src/DoorbellGateway.h lib/OGM-Common/include/knxprod.h
 
 if [ -n "$target" ]; then
     pio run -e "$env" --target "$target"

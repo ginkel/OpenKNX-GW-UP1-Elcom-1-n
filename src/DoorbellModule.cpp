@@ -33,7 +33,7 @@ void DoorbellModule::processGpioInput() {
   if (doorbellRingingStateChanged()) {
     DEBUG_LOG("Doorbell ring detected, publishing telegram...");
 
-    KoDoorbellRinging.value(ringDetected, DPT_State);
+    knx.getGroupObject(KoDoorbellRinging).value(ringDetected, DPT_State);
   }
 }
 

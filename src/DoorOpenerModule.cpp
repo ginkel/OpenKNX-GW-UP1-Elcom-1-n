@@ -18,7 +18,7 @@ void DoorOpenerModule::setup() {
 void DoorOpenerModule::loop() { maybeDisengageDoorOpener(); }
 
 void DoorOpenerModule::processInputKo(GroupObject &iKo) {
-  if (iKo.asap() == KO_ACTIVATE_DOOR_OPENER &&
+  if (iKo.asap() == KoActivateDoorOpener &&
       ((bool)iKo.value(DPT_Trigger)) == true) {
 
     triggerDoorOpener();
