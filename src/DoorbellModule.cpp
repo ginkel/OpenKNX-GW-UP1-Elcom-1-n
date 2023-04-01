@@ -15,14 +15,14 @@ void DoorbellModule::setup() {
   ringDetected = false;
   ringDetectedAt = 0;
 
-  pinMode(DOORBELL_RINGING_PIN, INPUT_PULLUP);
+  pinMode(DOORBELL_RINGING_PIN, INPUT);
 }
 
 void DoorbellModule::loop() {
   uint32_t now = millis();
 
-  if (lastPolledAt + DOORBELL_POLLING_INTERVAL > now)
-    return;
+  // if (lastPolledAt + DOORBELL_POLLING_INTERVAL > now)
+  // return;
 
   processGpioInput();
 
@@ -39,17 +39,30 @@ void DoorbellModule::processGpioInput() {
 
 bool DoorbellModule::doorbellRingingStateChanged() {
   bool state = doorbellRingingRawState();
+
+#ifdef DEBUG
+  if (state) {
+    DEBUG_LOG("Doorbell is currently ringing");
+  } else {
+    DEBUG_LOG("Doorbell is currently NOT ringing");
+  }
+#endif
+
   uint32_t now = millis();
   bool stateChanged = false;
 
   if (ringDetectedAt != -1) {
     if (ringDetected != state &&
-        (ringDetectedAt + DOORBELL_DEBOUNCE_INTERVAL) > now) {
+        (ringDetectedAt + DOORBELL_DEBOUNCE_INTERVAL) < now) {
+      DEBUG_LOG("Detected doorbell state: %d", state);
+
       ringDetected = state;
       ringDetectedAt = now;
       return true;
     }
   } else {
+    DEBUG_LOG("Obtained a new (initial) doorbell state: %d", state);
+
     ringDetected = state;
     ringDetectedAt = now;
     return true;
@@ -59,6 +72,8 @@ bool DoorbellModule::doorbellRingingStateChanged() {
 }
 
 bool DoorbellModule::doorbellRingingRawState() {
+  DEBUG_LOG("Polling doorbell state...");
   int state = digitalRead(DOORBELL_RINGING_PIN);
+  DEBUG_LOG("Doorbell raw state = %d", state)
   return state == LOW;
 }
