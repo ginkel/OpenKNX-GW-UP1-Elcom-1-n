@@ -5,75 +5,28 @@
 #include <cstdint>
 #include <knx.h>
 
-const std::string DoorbellModule::name() { return "Elcom-1+n-Doorbell"; }
+DoorbellModule::DoorbellModule()
+{
+  channels[0] = new DoorbellChannel("Door", KoDoorbellDoorCall, DOORBELL_DOOR_RINGING_PIN);
+  channels[1] = new DoorbellChannel("Storey", KoDoorbellStoreyCall, DOORBELL_STOREY_RINGING_PIN);
+}
+
+const std::string DoorbellModule::name() { return "Doorbell"; }
 
 const std::string DoorbellModule::version() { return DOORBELL_VERSION; }
 
-void DoorbellModule::setup() {
-  lastPolledAt = 0;
-
-  ringDetected = false;
-  ringDetectedAt = 0;
-
-  pinMode(DOORBELL_RINGING_PIN, INPUT);
-}
-
-void DoorbellModule::loop() {
-  uint32_t now = millis();
-
-  // if (lastPolledAt + DOORBELL_POLLING_INTERVAL > now)
-  // return;
-
-  processGpioInput();
-
-  lastPolledAt = now;
-}
-
-void DoorbellModule::processGpioInput() {
-  if (doorbellRingingStateChanged()) {
-    DEBUG_LOG("Doorbell ring detected, publishing telegram...");
-
-    knx.getGroupObject(KoDoorbellRinging).value(ringDetected, DPT_State);
+void DoorbellModule::setup()
+{
+  for (int i = 0; i < DOORBELL_CHANNEL_COUNT; i++)
+  {
+    channels[i]->setup();
   }
 }
 
-bool DoorbellModule::doorbellRingingStateChanged() {
-  bool state = doorbellRingingRawState();
-
-#ifdef DEBUG
-  if (state) {
-    DEBUG_LOG("Doorbell is currently ringing");
-  } else {
-    DEBUG_LOG("Doorbell is currently NOT ringing");
+void DoorbellModule::loop()
+{
+  for (int i = 0; i < DOORBELL_CHANNEL_COUNT; i++)
+  {
+    channels[i]->loop();
   }
-#endif
-
-  uint32_t now = millis();
-  bool stateChanged = false;
-
-  if (ringDetectedAt != -1) {
-    if (ringDetected != state &&
-        (ringDetectedAt + DOORBELL_DEBOUNCE_INTERVAL) < now) {
-      DEBUG_LOG("Detected doorbell state: %d", state);
-
-      ringDetected = state;
-      ringDetectedAt = now;
-      return true;
-    }
-  } else {
-    DEBUG_LOG("Obtained a new (initial) doorbell state: %d", state);
-
-    ringDetected = state;
-    ringDetectedAt = now;
-    return true;
-  }
-
-  return false;
-}
-
-bool DoorbellModule::doorbellRingingRawState() {
-  DEBUG_LOG("Polling doorbell state...");
-  int state = digitalRead(DOORBELL_RINGING_PIN);
-  DEBUG_LOG("Doorbell raw state = %d", state)
-  return state == LOW;
 }

@@ -1,9 +1,13 @@
 #include "OpenKNX.h"
+#include "DoorbellChannel.h"
 #include "hardware.h"
 #include <cstdint>
 
-class DoorbellModule : public OpenKNX::Module {
+class DoorbellModule : public OpenKNX::Module
+{
 public:
+  DoorbellModule();
+
   void loop() override;
   void setup() override;
 
@@ -11,13 +15,5 @@ public:
   const std::string version() override;
 
 private:
-  uint32_t lastPolledAt;
-  bool ringDetected;
-  uint32_t ringDetectedAt;
-
-  void processGpioInput();
-
-  bool doorbellRinging();
-  bool doorbellRingingStateChanged();
-  bool doorbellRingingRawState();
+  DoorbellChannel *channels[DOORBELL_CHANNEL_COUNT];
 };

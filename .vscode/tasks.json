@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "PlatformIO",
+			"task": "Rebuild IntelliSense Index",
+			"problemMatcher": [
+				"$platformio"
+			],
+			"label": "PlatformIO: Rebuild IntelliSense Index"
+		}
+	]
+}

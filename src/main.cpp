@@ -8,7 +8,7 @@ void setup() {
 #ifdef DEBUG
   Serial.begin(115200);
 #endif
-  DEBUG_LOG("GW-UP1-Elcom-1+n starting...");
+  openknx.logger.log("GW-UP1-Elcom-1+n starting...");
 
   const uint8_t firmwareRevision = 0;
   openknx.init(firmwareRevision);

@@ -5,7 +5,7 @@
     <Manufacturer RefId="M-00FA">
       <Catalog>
         <CatalogSection Id="M-00FA_CS-OpenKNX" Name="OpenKNX" Number="1" DefaultLanguage="de">
-          <CatalogItem Id="%CatalogItemId%" Name="Elcom-1+n-Gateway" Number="1" ProductRefId="%ProductId%" Hardware2ProgramRefId="%Hardware2ProgramId%" DefaultLanguage="de" />
+          <CatalogItem Id="%CatalogItemId%" Name="Elcom-1+n-Gateway" Number="1" ProductRefId="%ProductId%" Hardware2ProgramRefId="%Hardware2ProgramId%" DefaultLanguage="de" InternalDescription="Foo"/>
         </CatalogSection>
       </Catalog>
       <ApplicationPrograms>
@@ -19,22 +19,27 @@
               <ParameterType Id="%AID%_PT-CheckBox" Name="CheckBox">
                 <TypeNumber SizeInBit="1" Type="unsignedInt" minInclusive="0" maxInclusive="1" UIHint="CheckBox" />
               </ParameterType>
+              <ParameterType Id="%AID%_PT-Number" Name="Number">
+                <TypeNumber SizeInBit="16" Type="unsignedInt" minInclusive="500" maxInclusive="10000" />
+              </ParameterType>
             </ParameterTypes>
             <Parameters>
-              <Parameter Id="%AID%_P-0000001" Name="Enabled" ParameterType="%AID%_PT-CheckBox" Text="aktiv" Value="1">
+              <Parameter Id="%AID%_P-0000002" Name="DoorOpenerDuration" ParameterType="%AID%_PT-Number" Text="Öffnungsdauer Türöffner" Value="2500" InitialValue="2500" SuffixText="ms">
                 <Memory CodeSegment="%AID%_RS-04-00000" Offset="0" BitOffset="0" />
               </Parameter>
             </Parameters>
             <ParameterRefs>
-              <ParameterRef Id="%AID%_P-0000001_R-000000101" RefId="%AID%_P-0000001" />
+              <ParameterRef Id="%AID%_P-0000002_R-000000201" RefId="%AID%_P-0000002" />
             </ParameterRefs>
             <ComObjectTable>
-              <ComObject Id="%AID%_O-0000001" Name="DoorbellRinging" Text="Klingeln" Number="1" FunctionText="Ausgang" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-11" />
-              <ComObject Id="%AID%_O-0000002" Name="ActivateDoorOpener" Text="Tür öffnen" Number="2" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-17" />
+              <ComObject Id="%AID%_O-0000001" Name="DoorbellDoorCall" Text="Klingeln Haustür" Number="1" FunctionText="Ausgang" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-11" />
+              <ComObject Id="%AID%_O-0000002" Name="DoorbellStoreyCall" Text="Klingeln Etagenruf" Number="2" FunctionText="Ausgang" ObjectSize="1 Bit" ReadFlag="Enabled" WriteFlag="Disabled" CommunicationFlag="Enabled" TransmitFlag="Enabled" UpdateFlag="Disabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-11" />
+              <ComObject Id="%AID%_O-0000003" Name="ActivateDoorOpener" Text="Haustür öffnen" Number="3" FunctionText="Eingang" ObjectSize="1 Bit" ReadFlag="Disabled" WriteFlag="Enabled" CommunicationFlag="Enabled" TransmitFlag="Disabled" UpdateFlag="Enabled" ReadOnInitFlag="Disabled" DatapointType="DPST-1-17" />
             </ComObjectTable>
             <ComObjectRefs>
               <ComObjectRef Id="%AID%_O-0000001_R-000000101" RefId="%AID%_O-0000001" />
               <ComObjectRef Id="%AID%_O-0000002_R-000000201" RefId="%AID%_O-0000002" />
+              <ComObjectRef Id="%AID%_O-0000003_R-000000301" RefId="%AID%_O-0000003" />
             </ComObjectRefs>
             <AddressTable MaxEntries="65535" />
             <AssociationTable MaxEntries="65535" />
@@ -57,9 +62,12 @@
           </Static>
           <Dynamic>
             <ChannelIndependentBlock>
-              <ParameterBlock Id="%AID%_PB-1" Name="General" Text="Allgemeine Parameter">
-                <ParameterRefRef RefId="%AID%_P-0000001_R-000000101" />
+              <ParameterBlock Id="%AID%_PB-1" Name="Door" Text="Haustür">
+                <ParameterRefRef RefId="%AID%_P-0000002_R-000000201" />
                 <ComObjectRefRef RefId="%AID%_O-0000001_R-000000101" />
+                <ComObjectRefRef RefId="%AID%_O-0000003_R-000000301" />
+              </ParameterBlock>
+              <ParameterBlock Id="%AID%_PB-2" Name="Storey" Text="Etagenruf">
                 <ComObjectRefRef RefId="%AID%_O-0000002_R-000000201" />
               </ParameterBlock>
             </ChannelIndependentBlock>
