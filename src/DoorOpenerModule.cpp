@@ -23,7 +23,6 @@ void DoorOpenerModule::processInputKo(GroupObject &iKo)
   if (iKo.asap() == KoActivateDoorOpener &&
       ((bool)iKo.value(DPT_Trigger)) == true)
   {
-
     triggerDoorOpener();
   }
 }
