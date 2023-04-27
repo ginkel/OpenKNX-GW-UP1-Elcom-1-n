@@ -1,4 +1,12 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+
+SOURCE=${BASH_SOURCE[0]}
+while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
+  SOURCE=$(readlink "$SOURCE")
+  [[ $SOURCE != /* ]] && SOURCE=$DIR/$SOURCE # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
 
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <env> [target]"
@@ -8,11 +16,17 @@ fi
 env=$1
 target=$2
 
-cp src/DoorbellGatewayHardware.h lib/OGM-Common/include/hardware.h
-cp src/DoorbellGateway.h lib/OGM-Common/include/knxprod.h
+cp "${DIR}/../src/DoorbellGatewayHardware.h" "${DIR}/../lib/OGM-Common/include/hardware.h"
+cp "${DIR}/../src/DoorbellGateway.h" "${DIR}/../lib/OGM-Common/include/knxprod.h"
 
-if [ -n "$target" ]; then
-    pio run -e "$env" --target "$target"
-else
-    pio run -e "$env"
-fi
+(
+    cd "${DIR}/../"
+
+    if [ -n "$target" ]; then
+        pio run -e "$env" --target "$target"
+    else
+        pio run -e "$env"
+    fi
+)
+
+gzip -k "${DIR}/../.pio/build/${env}/firmware.bin"
