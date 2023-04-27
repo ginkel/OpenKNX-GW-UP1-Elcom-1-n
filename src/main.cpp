@@ -1,6 +1,7 @@
 #include "DoorOpenerModule.h"
 #include "DoorbellModule.h"
 #include "OpenKNX.h"
+#include "UpdateModule.h"
 #include "doorbell.h"
 #include <Arduino.h>
 
@@ -14,6 +15,7 @@ void setup() {
   openknx.init(firmwareRevision);
   openknx.addModule(1, new DoorbellModule());
   openknx.addModule(2, new DoorOpenerModule());
+  openknx.addModule(3, new UpdateModule());
   openknx.setup();
 }
 
