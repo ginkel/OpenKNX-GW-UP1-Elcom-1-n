@@ -11,4 +11,4 @@
 #define MAIN_OpenKnxId 0xAF
 #define MAIN_ApplicationNumber 0
 #define MAIN_ApplicationVersion 1
-#define MAIN_OrderNumber "0"
+#define MAIN_OrderNumber "GW-UP1-Elcom-1+n"
