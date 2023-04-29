@@ -20,7 +20,7 @@ cp "${DIR}/../src/DoorbellGatewayHardware.h" "${DIR}/../lib/OGM-Common/include/h
 cp "${DIR}/../src/DoorbellGateway.h" "${DIR}/../lib/OGM-Common/include/knxprod.h"
 
 (
-    cd "${DIR}/../"
+    cd "${DIR}/../" || exit 2
 
     if [ -n "$target" ]; then
         pio run -e "$env" --target "$target"
