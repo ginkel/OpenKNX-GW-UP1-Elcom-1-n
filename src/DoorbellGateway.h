@@ -8,7 +8,7 @@
 #define KoDoorbellStoreyCall 2
 #define KoActivateDoorOpener 3
 
-#define MAIN_OpenKnxId 0xAF
+#define MAIN_OpenKnxId 0xAE
 #define MAIN_ApplicationNumber 0
 #define MAIN_ApplicationVersion 1
 #define MAIN_OrderNumber "GW-UP1-Elcom-1+n"

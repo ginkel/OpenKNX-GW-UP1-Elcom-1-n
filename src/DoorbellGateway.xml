@@ -9,7 +9,7 @@
         </CatalogSection>
       </Catalog>
       <ApplicationPrograms>
-        <op:version OpenKnxId="0xAF" ApplicationNumber="0" ApplicationVersion="1" ReplacesVersions="0" ApplicationRevision="0" />
+        <op:version OpenKnxId="0xAE" ApplicationNumber="0" ApplicationVersion="1" ReplacesVersions="0" ApplicationRevision="0" />
         <ApplicationProgram Id="%AID%" ApplicationNumber="0" ApplicationVersion="1" ReplacesVersions="0" ProgramType="ApplicationProgram" MaskVersion="MV-07B0" Name="Elcom-1+n-Gateway" LoadProcedureStyle="MergedProcedure" PeiType="0" DefaultLanguage="de" DynamicTableManagement="false" Linkable="true" MinEtsVersion="5.7">
           <Static>
             <Code>
@@ -65,17 +65,15 @@
               <ParameterBlock Id="%AID%_PB-1" Name="Door" Text="Haustür">
                 <ParameterRefRef RefId="%AID%_P-0000002_R-000000201" />
                 <ComObjectRefRef RefId="%AID%_O-0000001_R-000000101" />
-                <ComObjectRefRef RefId="%AID%_O-0000003_R-000000301" />
-              </ParameterBlock>
-              <ParameterBlock Id="%AID%_PB-2" Name="Storey" Text="Etagenruf">
                 <ComObjectRefRef RefId="%AID%_O-0000002_R-000000201" />
+                <ComObjectRefRef RefId="%AID%_O-0000003_R-000000301" />
               </ParameterBlock>
             </ChannelIndependentBlock>
           </Dynamic>
         </ApplicationProgram>
       </ApplicationPrograms>
       <Hardware>
-        <Hardware Id="%HardwareId%" Name="OpenKNX: Elcom-1+n-Gateway" SerialNumber="0" VersionNumber="1" BusCurrent="10" HasIndividualAddress="true" HasApplicationProgram="true">
+        <Hardware Id="%HardwareId%" Name="OpenKNX: Elcom-1+n-Gateway" SerialNumber="0xAE00" VersionNumber="1" BusCurrent="10" HasIndividualAddress="true" HasApplicationProgram="true">
           <Products>
             <Product Id="%ProductId%" Text="OpenKNX: Elcom-1+n-Gateway" OrderNumber="GW-UP1-Elcom-1+n" IsRailMounted="false" DefaultLanguage="de">
               <RegistrationInfo RegistrationStatus="Registered" />
