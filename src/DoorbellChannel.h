@@ -1,6 +1,4 @@
 #include "OpenKNX.h"
-#include "hardware.h"
-#include <cstdint>
 
 class DoorbellChannel : public OpenKNX::Channel
 {
@@ -11,6 +9,9 @@ public:
     void setup() override;
 
     const std::string name() override;
+
+protected:
+    virtual const std::string logPrefix() override;
 
 private:
     std::string channelName;

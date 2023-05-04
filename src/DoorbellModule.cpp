@@ -1,9 +1,5 @@
 #include "DoorbellModule.h"
 #include "doorbell.h"
-#include "hardware.h"
-#include <Arduino.h>
-#include <cstdint>
-#include <knx.h>
 
 DoorbellModule::DoorbellModule()
 {

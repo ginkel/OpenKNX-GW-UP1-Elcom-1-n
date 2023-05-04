@@ -29,4 +29,4 @@ cp "${DIR}/../src/DoorbellGateway.h" "${DIR}/../lib/OGM-Common/include/knxprod.h
     fi
 )
 
-gzip -k "${DIR}/../.pio/build/${env}/firmware.bin"
+gzip -kf "${DIR}/../.pio/build/${env}/firmware.bin"

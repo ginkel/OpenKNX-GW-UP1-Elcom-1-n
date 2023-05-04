@@ -1,5 +1,4 @@
 #include "OpenKNX.h"
-#include "hardware.h"
 
 class DoorOpenerModule : public OpenKNX::Module {
 public:

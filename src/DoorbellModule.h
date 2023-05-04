@@ -1,7 +1,4 @@
-#include "OpenKNX.h"
 #include "DoorbellChannel.h"
-#include "hardware.h"
-#include <cstdint>
 
 class DoorbellModule : public OpenKNX::Module
 {

@@ -29,7 +29,7 @@ void DoorOpenerModule::processInputKo(GroupObject &iKo)
 
 void DoorOpenerModule::triggerDoorOpener()
 {
-  LOG("Triggering door opener...");
+  logInfoP("Triggering door opener...");
 
   digitalWrite(ACTIVATE_DOOR_OPENER_PIN, HIGH);
   doorOpenerActive = true;
@@ -41,7 +41,7 @@ void DoorOpenerModule::maybeDisengageDoorOpener()
   if (doorOpenerActive &&
       doorOpenerEngagedAt + DOOR_OPENER_DURATION < millis())
   {
-    LOG("Disengaging door opener...");
+    logInfoP("Disengaging door opener...");
 
     digitalWrite(ACTIVATE_DOOR_OPENER_PIN, LOW);
     doorOpenerActive = false;

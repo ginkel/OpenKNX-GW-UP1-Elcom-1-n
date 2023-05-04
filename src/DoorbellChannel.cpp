@@ -1,9 +1,4 @@
 #include "DoorbellChannel.h"
-#include "doorbell.h"
-#include "hardware.h"
-#include <Arduino.h>
-#include <cstdint>
-#include <knx.h>
 
 const std::string DoorbellChannel::name() { return channelName; }
 
@@ -40,7 +35,7 @@ void DoorbellChannel::processGpioInput()
 {
     if (doorbellRingingStateChanged())
     {
-        LOG("Doorbell ring detected, publishing telegram...");
+        logInfoP("Doorbell ring detected, publishing telegram...");
 
         knx.getGroupObject(channelRingingCommObject).value(ringDetected, DPT_State);
     }
@@ -50,9 +45,7 @@ bool DoorbellChannel::doorbellRingingStateChanged()
 {
     bool state = doorbellRingingRawState();
 
-#ifdef DEBUG
-    LOG("Doorbell is currently %sringing", state ? "" : "NOT ");
-#endif
+    logDebugP("Doorbell is currently %sringing", state ? "" : "NOT ");
 
     uint32_t now = millis();
 
@@ -61,7 +54,7 @@ bool DoorbellChannel::doorbellRingingStateChanged()
         if (ringDetected != state &&
             (ringDetectedAt + DOORBELL_DEBOUNCE_INTERVAL) < now)
         {
-            LOG("Detected doorbell state: %d", state);
+            logDebugP("Detected doorbell state: %d", state);
 
             ringDetected = state;
             ringDetectedAt = now;
@@ -70,7 +63,7 @@ bool DoorbellChannel::doorbellRingingStateChanged()
     }
     else
     {
-        LOG("Obtained an (initial) doorbell state: %d", state);
+        logDebugP("Obtained an (initial) doorbell state: %d", state);
 
         ringDetected = state;
         ringDetectedAt = now;
@@ -82,8 +75,13 @@ bool DoorbellChannel::doorbellRingingStateChanged()
 
 bool DoorbellChannel::doorbellRingingRawState()
 {
-    LOG("Polling doorbell state...");
+    logDebugP("Polling doorbell state...");
     int state = digitalRead(channelGpioPin);
-    LOG("Doorbell raw state = %d", state);
+    logDebugP("Doorbell raw state = %d", state);
     return state == LOW;
+}
+
+const std::string DoorbellChannel::logPrefix()
+{
+    return name();
 }
