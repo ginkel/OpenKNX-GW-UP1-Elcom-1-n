@@ -16,9 +16,6 @@ fi
 env=$1
 target=$2
 
-cp "${DIR}/../src/DoorbellGatewayHardware.h" "${DIR}/../lib/OGM-Common/include/hardware.h"
-cp "${DIR}/../src/DoorbellGateway.h" "${DIR}/../lib/OGM-Common/include/knxprod.h"
-
 (
     cd "${DIR}/../" || exit 2
 
